@@ -3,7 +3,7 @@ using namespace std;
 
 // Range Minimum Query in Segment Tree.
 
-struct rmq{
+struct range_minimum_query{
   // 管理したい元の配列のサイズ以上の2冪。
   int n;
   // セグメント木(完全二分木)を管理する一次元配列。
@@ -13,7 +13,7 @@ struct rmq{
   
   // @param sz 管理したい元の配列のサイズ
   // nをsz以上の2冪にし、セグメント木のサイズを2*n-1、値をINFに初期化する。
-  rmq(int sz){
+  range_minimum_query(int sz){
     for(n = 1; n<sz;) n <<= 1;
     segtree.assign(2*n-1,INF);
   }
@@ -40,7 +40,7 @@ struct rmq{
     else return min(find(l,r,a,(a+b)/2,2*k+1), find(l,r,(a+b)/2,b,2*k+2));
   }
   
-    
+  // 指定した頂点とその影響する範囲の値を更新する。  
   // @param i 書き換えたい値の元の配列におけるindex
   // @param x 更新後の値
   void update(int i, int x){
@@ -49,11 +49,21 @@ struct rmq{
     // よって、元の配列を最初に更新したいので、元の配列部分のindexに修正するため、n-1を加える。
     i += n-1;
     
-    //
+    // 更新した最下段の情報の影響する範囲を更新する。
+    // 具体的には更新した頂点の祖先全てが対象となる。
     while(i>0){
+      // 親ノードへと移動
       i = (i-1)/2;
+      // 自分の子２つを比較し、小さい方を得る。
       segtree[i] = min(segtree[2*i+1], segtree[2*i+2]);
     }
   }
 };
-  
+
+// 使用例
+int main(){
+  range_minimum_query rmq(10);
+  rmq.update(5,3) // 5番目の頂点を3に更新する。
+  cout << rmq.find(0,3) << endl; // [0,3)の区間minを出力。区間内の全頂点が未更新なので、出力値はINF=2^31-1
+  cout << rmq.find(3,7) << endl; // [0,7)の区間minを出力。5番目の頂点のみが更新されているので、出力値は3
+}
