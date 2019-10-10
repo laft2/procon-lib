@@ -18,6 +18,7 @@ struct range_minimum_query{
     segtree.assign(2*n-1,INF);
   }
   
+  
   // 元の配列の[l,r)のminを求める。
   // @param l,r [l,r)が求めたいminの元の配列での範囲。
   // @param a,b [a,b)が現在見ている頂点の持つminの元の配列における範囲。
@@ -25,9 +26,13 @@ struct range_minimum_query{
   // @return    セグメント木により、求められた[l,r)の最小値。
   // 上からDFSして、[l,r)内の頂点であれば自身の値を返し、そうでなければ単位元を返す。
   // このようにして帰ってきた値を全てminしたものが求めたいものである。
-  int find(int l, int r, int a=0, int b=n, int k=0){
+  // デフォルト引数にn(非staticなメンバ変数)を指定できないため、オーバーロードしている。
+  int find(int l, int r){
+    return find(l,r,0,n,0);
+  }
+  int find(int l, int r, int a, int b, int k){
     // [a,b)が[l,r)の外側なら、影響のない単位元INFを返す。
-    if(b<l || r<a) return INF;
+    if(b<=l || r<=a) return INF;
     
     // [a,b)が[l,r)の内側なら、その頂点は[l,r)内で最も大きい区間minを持つので、それを返す。
     else if(l<=a && b<=r) return segtree[k];
@@ -49,6 +54,8 @@ struct range_minimum_query{
     // よって、元の配列を最初に更新したいので、元の配列部分のindexに修正するため、n-1を加える。
     i += n-1;
     
+    // その頂点をxに更新する。
+    segtree[i] = x;
     // 更新した最下段の情報の影響する範囲を更新する。
     // 具体的には更新した頂点の祖先全てが対象となる。
     while(i>0){
