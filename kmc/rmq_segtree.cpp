@@ -72,5 +72,5 @@ int main(){
   range_minimum_query rmq(10);
   rmq.update(5,3) // 5番目の頂点を3に更新する。
   cout << rmq.find(0,3) << endl; // [0,3)の区間minを出力。区間内の全頂点が未更新なので、出力値はINF=2^31-1
-  cout << rmq.find(3,7) << endl; // [0,7)の区間minを出力。5番目の頂点のみが更新されているので、出力値は3
+  cout << rmq.find(3,7) << endl; // [3,7)の区間minを出力。5番目の頂点のみが更新されているので、出力値は3
 }
