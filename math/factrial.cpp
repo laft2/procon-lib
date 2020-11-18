@@ -49,3 +49,8 @@ struct factrial{
     return comb(n+k-1, k);
   }
 };
+
+// usage:
+// factrial<mint> fc();
+// fc.fact(10); // 10!を計算する。
+// fc.comb(10,3); // 10C3を計算する。
