@@ -2,108 +2,120 @@
 
 [![Actions Status](https://github.com/laft2/procon-lib/workflows/verify/badge.svg)](https://github.com/laft2/procon-lib/actions)
 
-競技プログラミング用のC++ライブラリ集。
-ヘッダーオンリーで提供されます。
+競技プログラミング用の C++ ライブラリ集です。
+すべてヘッダーオンリー (`.hpp`) で提供されます。
+
+---
 
 ## ディレクトリ構造
 
 ```
 procon-lib/
-├── geometry/        # 幾何学関連アルゴリズム
-│   └── geometry.hpp
-├── math/              # 数学関数
-│   └── math.hpp
-├── flow/              # ネットワークフロー関連
-│   └── flow.hpp
-├── string/            # 文字列関連
-│   └── string.hpp
-└── test/              # 各アルゴリズムのテストコード
-    ├── geometry.test.cpp
-    └── ...
+├── geometry/            # 幾何学関連アルゴリズム
+│   └── geometry.hpp     # 幾何ライブラリ
+├── math/                # 数学・数論関連アルゴリズム
+│   ├── factrial.hpp     # 階乗・組合せ計算（O(N) 事前計算）
+│   └── modint.hpp       # 剰余付き整数（ModInt）
+├── test/                # online-judge-verifier 用のテストコード
+│   ├── example.test.cpp
+│   └── factorial.test.cpp
+└── .github/
+    └── workflows/
+        └── verify.yml   # GitHub Actions (自動テスト・ドキュメント生成)
 ```
 
-## インストール・設定
+---
 
-### 1. リポジトリのクローン
+## インストールと設定
 
+### 1. ライブラリの配置（グローバル共有方式）
+本リポジトリをローカルの任意の場所（例: `/home/laft/procon/procon-lib`）にクローンします。
 ```bash
-git clone https://github.com/laft2/procon-lib
-cd procon-lib
+git clone https://github.com/あなたのユーザー名/procon-lib.git
 ```
 
-### 2. VSCodeのIncludeパス設定
+### 2. 解答リポジトリ側（VSCode）の設定
+解答を記述する別のプロジェクトで、`.vscode/c_cpp_properties.json` を開き、`includePath` に本リポジトリの絶対パスを追加します。
 
-お使いの環境に応じて `.vscode/c_cpp_properties.json` を設定します。
-
+**設定例 (`.vscode/c_cpp_properties.json`):**
 ```json
 {
-    "configurations": [
-        {
-            "name": "WSL",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/home/laft/procon/procon-lib" // ← リポジトリの絶対パス
-            ],
-            "compilerPath": "/usr/bin/g++",
-            "cStandard": "c++20",
-            "cppStandard": "c++20",
-            "intelliSenseMode": "linux-gcc-x64"
-        }
-    ]
+  "configurations": [
+    {
+      "name": "WSL",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/home/laft/procon/procon-lib"  // ← クローンした本ライブラリの絶対パスを指定
+      ],
+      "compilerPath": "/usr/bin/g++",
+      "cStandard": "c17",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-x64"
+    }
+  ],
+  "version": 4
 }
 ```
+これにより、解答プロジェクト内で `#include "geometry/geometry.hpp"` と記述するだけで、VSCode 上でのコード補完や定義ジャンプが機能するようになります。
+
+---
 
 ## 使用方法
 
-### ヘッダーのインクルード
-
+### コード内でのインクルード
+解答コード（`main.cpp`）で必要なライブラリをインクルードします。
 ```cpp
 #include "geometry/geometry.hpp"
-#include "math/math.hpp"
-// ...
+#include "math/modint.hpp"
+#include "math/factrial.hpp"
 ```
 
-### コンパイル方法
-
-`-I` オプションでライブラリのパスを指定します。
-
+### ローカルでのコンパイル
+コンパイル時に、`-I` オプションで本ライブラリの絶対パスを指定します。
 ```bash
-g++ -std=c++20 -I /home/laft/procon/procon-lib main.cpp -o main
+g++ -std=c++17 -I /home/laft/procon/procon-lib main.cpp -o main
 ```
 
 ### 提出用ファイルの生成
-
-`oj-bundle` を使うと、依存ヘッダーを全て1ファイルにまとめられます。
-
+`oj-bundle` を使用して、依存ヘッダーをすべて1つのファイルにマージします。
 ```bash
-# 解答コードが main.cpp の場合
-oj-bundle main.cpp -I /home/laft/procon/procon-lib -o submission.cpp
+oj-bundle main.cpp -I /home/laft/procon/procon-lib > submission.cpp
 ```
 
-## テスト
+---
 
-`oj-verify` を使用して各アルゴリズムをテストします。
+## 自動検証 (online-judge-verify-helper)
 
+本リポジトリは GitHub Actions と連携しており、リポジトリにプッシュすると自動で `oj-verify` が走り、検証ステータスが更新されます。
+
+### 1. ローカルでのインストール
+依存パッケージのバージョン競合やクラッシュを防ぐため、最新のパッケージマネージャーである **`uv`** を使用した隔離インストールを推奨します。
 ```bash
-# 全てのテストを実行
-./.verify-helper/bin/oj-verify all
-
-# 特定のカテゴリのみ実行
-./.verify-helper/bin/oj-verify geometry
+uv tool install --with "setuptools<82.0.0" online-judge-verify-helper
 ```
 
-### テストの追加
+### 2. ローカルでのテスト実行
+```bash
+# すべての検証テストを実行
+oj-verify all
+```
 
-1. `test/geometry.test.cpp` のようなファイルを作成
-2. `@title`, `@url` を先頭に記述して AtCoderなどの問題を référence
-3. `@cpp` ブロック内でテストコードを実装
+### 3. テスト（検証コード）の追加方法
+1. `test/` ディレクトリ内に `.test.cpp` という拡張子でファイルを作成します（例: `test/my_algorithm.test.cpp`）。
+2. ファイルの先頭行に、検証先（オンラインジャッジ）の問題の URL を記述します。
+3. ライブラリ本体をインクルードし、問題を解くコードを実装します。
 
-**例:**
-
+**テストファイルの作成例:**
 ```cpp
+#define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_B"
+
+#include "../math/factrial.hpp" // 相対パスでライブラリをインクルード
 #include <iostream>
-#include <vector>
-#include "geometry/geometry.hpp"
-#include "math/math.hpp"
-// ...
+
+using namespace std;
+
+int main() {
+    // 検証用の解答コード
+    return 0;
+}
 ```
