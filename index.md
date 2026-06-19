@@ -4,21 +4,24 @@ data:
   - name: geometry
     pages:
     - icon: ':warning:'
-      path: geometry/geometry.cpp
-      title: geometry/geometry.cpp
+      path: geometry/geometry.hpp
+      title: geometry/geometry.hpp
   - name: math
     pages:
-    - icon: ':warning:'
-      path: math/factrial.cpp
-      title: math/factrial.cpp
-    - icon: ':warning:'
-      path: math/modint.cpp
-      title: math/modint.cpp
+    - icon: ':heavy_check_mark:'
+      path: math/factrial.hpp
+      title: math/factrial.hpp
+    - icon: ':heavy_check_mark:'
+      path: math/modint.hpp
+      title: math/modint.hpp
   verificationCategories:
-  - name: .
+  - name: test
     pages:
     - icon: ':heavy_check_mark:'
-      path: example.test.cpp
-      title: example.test.cpp
+      path: test/example.test.cpp
+      title: test/example.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/factorial.test.cpp
+      title: test/factorial.test.cpp
 layout: toppage
 ---
