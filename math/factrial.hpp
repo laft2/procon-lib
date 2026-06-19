@@ -1,11 +1,12 @@
+#pragma once
 #include<vector>
 using namespace std;
 
 template<typename T>
 struct factrial{
-  int sz_f=0, sz_i=0;
-  vector<T> m_fact;
-  vector<T> m_infact;
+  int sz_f=1, sz_i=1;
+  vector<T> m_fact = {1};
+  vector<T> m_infact = {1};
 
   void update_fact(int n){
     if(sz_f > n) return;
@@ -32,7 +33,7 @@ struct factrial{
   // (1/n!)を求める。
   T infact(int n){
     update_infact(n);
-    return m_infact;
+    return m_infact[n];
   }
   // nPkを求める。
   T perm(int n, int k){
