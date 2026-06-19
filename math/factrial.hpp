@@ -33,7 +33,7 @@ struct factrial{
   // (1/n!)を求める。
   T infact(int n){
     update_infact(n);
-    return m_infact;
+    return m_infact[n];
   }
   // nPkを求める。
   T perm(int n, int k){
