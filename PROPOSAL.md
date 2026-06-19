@@ -154,3 +154,19 @@ int main() {
 
 ### ステップ 3: 解答プロジェクト側での動作確認
 - 解答プロジェクト側の VSCode 設定にインクルードパスを設定し、補完や `oj-bundle` をテスト。
+
+---
+
+## 補足: ローカル環境で `oj-bundle` を安全にインストールする方法
+
+ローカル（WSL等）環境でも、単に `pip install online-judge-verify-helper` を実行すると、最新の `setuptools` (バージョン82.0.0以上) が入ってしまい、CIと同様に `ModuleNotFoundError: No module named 'pkg_resources'` エラーが発生します。
+
+これを防ぎ、高速かつ安全にインストールするために、最新の Python パッケージマネージャーである **`uv`** を使用したインストールを推奨します。
+
+### `uv` を使用したインストール方法
+`uv` を用いて隔離された環境に `oj-bundle` / `oj-verify` をインストールし、同時に `setuptools` のバージョンを固定します。これにより、他の Python 環境を汚さずにコマンドがグローバルに使えます。
+
+```bash
+# setuptools のバージョンを 82.0.0 未満に固定してインストール
+uv tool install --with "setuptools<82.0.0" online-judge-verify-helper
+```
