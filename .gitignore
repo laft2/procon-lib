@@ -1,0 +1,22 @@
+# Compile outputs (Executable binaries)
+a.out
+*.out
+*.exe
+*.o
+*.obj
+test_bin
+
+# macOS / Windows / Linux system files
+.DS_Store
+Thumbs.db
+*~
+
+# VSCode cache and workspace logs
+.vscode/ipch/
+.vscode/browse.vc.db
+.vscode/browse.vc.db-journal
+.vscode/*.log
+
+# online-judge-verify-helper local cache and markdown
+.verify-helper/markdown/
+.verify-helper/timestamps.local.json
