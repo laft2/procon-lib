@@ -14,6 +14,11 @@ data:
     - icon: ':heavy_check_mark:'
       path: math/modint.hpp
       title: math/modint.hpp
+  - name: tree
+    pages:
+    - icon: ':heavy_check_mark:'
+      path: tree/lca.hpp
+      title: tree/lca.hpp
   verificationCategories:
   - name: test
     pages:
@@ -23,5 +28,8 @@ data:
     - icon: ':heavy_check_mark:'
       path: test/factorial.test.cpp
       title: test/factorial.test.cpp
+    - icon: ':heavy_check_mark:'
+      path: test/lca.test.cpp
+      title: test/lca.test.cpp
 layout: toppage
 ---
