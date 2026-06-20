@@ -170,3 +170,37 @@ int main() {
 # setuptools のバージョンを 82.0.0 未満に固定してインストール
 uv tool install --with "setuptools<82.0.0" online-judge-verify-helper
 ```
+
+---
+
+## 4. 他のオンラインジャッジサービスへのテスト拡張
+
+`oj-verify` は AOJ 以外の複数のサービスでのテスト実行に対応しています。それぞれの設定方法は以下の通りです。
+
+### 1. Library Checker (yosupo judge) 【推奨】
+最も強力かつ高度なアルゴリズムのテストケースが揃っているサービスです。
+* **準備**: アカウントやトークンの設定は**不要**です（AOJと同様にすぐに使えます）。
+* **設定方法**: テストファイル（`.test.cpp`）の先頭に Library Checker の問題 URL を指定するだけです。
+  ```cpp
+  #define PROBLEM "https://judge.yosupo.jp/problem/aplusb"
+  ```
+
+### 2. YukiCoder
+有志による問題が集まる日本のジャッジサービスです。
+* **準備**:
+  1. YukiCoder の設定ページから「APIトークン」を取得します。
+  2. GitHub リポジトリの **Settings > Secrets and variables > Actions** に移動し、`YUKICODER_TOKEN` という名前の Repository Secret を作成し、トークンを登録します。
+  ※ すでに `verify.yml` の `Run tests` ステップに `YUKICODER_TOKEN: ${{ secrets.YUKICODER_TOKEN }}` を設定してあるため、シークレットを登録するだけで利用可能になります。
+* **設定方法**:
+  ```cpp
+  #define PROBLEM "https://yukicoder.me/problems/no/9000"
+  ```
+
+### 3. AtCoder
+日本で最も活発な競プロサービスですが、Actions 上からの自動提出にはいくつかのハードルがあります。
+* **注意点**: AtCoder は非ログインでのコード提出を受け付けないため、GHA上でログインするか、あるいはテストデータフェッチ用の `DROPBOX_TOKEN` を Secrets に登録する必要があります。また、昨今の Cloudflare によるスクレイピング保護により、GitHub Actions のランナーからのログイン提出がブロックされるケースが多く、テスト先としては安定しません。
+* **対策**: 高度なデータ構造やアルゴリズムを検証したい場合は、AtCoder の代わりに **Library Checker** の問題を使うのが現在のベストプラクティスです。
+* **設定方法**:
+  ```cpp
+  #define PROBLEM "https://atcoder.jp/contests/practice/tasks/practice_1"
+  ```
