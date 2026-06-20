@@ -20,6 +20,6 @@ int main() {
   for (int i = 0; i < q; ++i) {
     int u, v;
     cin >> u >> v;
-    cout << lca.query(u, v) << '\n';
+    cout << lca.lca(u, v) << '\n';
   }
 }
