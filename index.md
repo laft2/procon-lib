@@ -18,13 +18,10 @@ data:
     pages:
     - icon: ':heavy_check_mark:'
       path: tree/lca.hpp
-      title: tree/lca.hpp
+      title: "\u6700\u8FD1\u5171\u901A\u7956\u5148 (LCA: Lowest Common Ancestor)"
   verificationCategories:
   - name: test
     pages:
-    - icon: ':heavy_check_mark:'
-      path: test/example.test.cpp
-      title: test/example.test.cpp
     - icon: ':heavy_check_mark:'
       path: test/factorial.test.cpp
       title: test/factorial.test.cpp
