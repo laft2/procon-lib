@@ -18,7 +18,6 @@ struct lowest_common_ancestor {
 public:
   int n;     // 頂点数
   int log_n; // ダブリングテーブルの最大乗数 (log2(n) 程度)
-  int root;  // 木の根の頂点番号
   std::vector<std::vector<int>> graph; // 内部で保持する隣接リスト
   std::vector<int> depth;              // 各頂点の深さ（根からの距離）
   std::vector<std::vector<int>>
@@ -28,10 +27,9 @@ public:
   /**
    * @brief コンストラクタ
    * @param n 頂点数
-   * @param root 木の根の番号 (デフォルトは 0)
    */
-  lowest_common_ancestor(int n, int root = 0)
-      : n(n), log_n(32 - __builtin_clz(n)), root(root), graph(n), depth(n),
+  lowest_common_ancestor(int n)
+      : n(n), log_n(32 - __builtin_clz(n)), graph(n), depth(n),
         parent(log_n, std::vector<int>(n, -1)) {}
 
   /**
@@ -48,8 +46,9 @@ public:
 
   /**
    * @brief テーブルを構築する (辺をすべて追加した後に必ず1回呼び出してください)
+   * @param root 木の根の番号 (デフォルトは 0)
    */
-  void build() {
+  void build(int root = 0) {
     // DFSで直近の親(2^0 = 1個上)と各頂点の深さを求める
     dfs(root);
     // ダブリングテーブルの構築

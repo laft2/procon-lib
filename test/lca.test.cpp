@@ -9,12 +9,13 @@ int main() {
   int n, q;
   cin >> n >> q;
   vector<int> p(n);
-  auto lca = lowest_common_ancestor(n, 0);
+  auto lca = lowest_common_ancestor(n);
   for (int i = 0; i < n - 1; ++i) {
     int tmp;
     cin >> tmp;
     lca.add_edge(i + 1, tmp);
   }
+  lca.build();
   for (int i = 0; i < q; ++i) {
     int u, v;
     cin >> u >> v;
