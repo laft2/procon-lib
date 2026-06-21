@@ -121,7 +121,7 @@ oj-verify all
 ```cpp
 #define PROBLEM "https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_B"
 
-#include "../math/factrial.hpp" // 相対パスでライブラリをインクルード
+#include "math/factrial.hpp" // ルートからのインクルードパス指定によるインクルード
 #include <iostream>
 
 using namespace std;

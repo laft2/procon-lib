@@ -1,6 +1,6 @@
 #define PROBLEM "https://judge.yosupo.jp/problem/lca"
 
-#include "../tree/lca.hpp"
+#include "tree/lca.hpp"
 #include <iostream>
 
 using namespace std;
