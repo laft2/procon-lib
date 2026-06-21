@@ -1,8 +1,8 @@
 #define PROBLEM                                                                \
   "https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/DPL/5/DPL_5_D"
 
-#include "../math/factrial.hpp"
-#include "../math/modint.hpp"
+#include "math/factrial.hpp"
+#include "math/modint.hpp"
 #include <iostream>
 
 using namespace std;
