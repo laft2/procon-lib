@@ -75,7 +75,6 @@ template <ll Mod> struct modint {
     return res;
   }
   static int sz;
-  static vector<modint> fact, infact;
 };
 
 using modint1000000007 = modint<1000000007>;
