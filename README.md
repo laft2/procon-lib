@@ -11,20 +11,32 @@
 
 ```
 procon-lib/
+├── atcoder/             # AtCoder Library (ACL)
+│   ├── dsu.hpp          # Disjoint Set Union
+│   ├── segtree.hpp      # Segment Tree
+│   └── ...              # その他 ACL 提供ヘッダー
 ├── geometry/            # 幾何学関連アルゴリズム
 │   └── geometry.hpp     # 幾何ライブラリ
 ├── math/                # 数学・数論関連アルゴリズム
 │   ├── factrial.hpp     # 階乗・組合せ計算（O(N) 事前計算）
 │   └── modint.hpp       # 剰余付き整数（ModInt）
+├── tree/                # 木構造関連アルゴリズム
+│   └── lca.hpp          # 最近共通祖先 (LCA)
 ├── test/                # online-judge-verifier 用のテストコード
-│   ├── example.test.cpp
-│   └── factorial.test.cpp
+│   ├── factorial.test.cpp
+│   └── lca.test.cpp
 └── .github/
     └── workflows/
         └── verify.yml   # GitHub Actions (自動テスト・ドキュメント生成)
 ```
 
+> [!NOTE]
+> **AtCoder Library (ACL) の同梱について**
+> 本リポジトリには、AtCoder 公式の [ac-library](https://github.com/atcoder/ac-library) の `atcoder` ディレクトリ内のファイル群を `atcoder/` 配下に内包しています。
+> これにより、このライブラリをインクルードするだけで、ACL のデータ構造やアルゴリズム（`atcoder::dsu`, `atcoder::segtree` など）を利用したライブラリ開発や解答コードの作成が可能です。
+
 ---
+
 
 ## インストールと設定
 
