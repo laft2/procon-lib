@@ -1,11 +1,10 @@
 #pragma once
 #include <vector>
-using namespace std;
 
 template <typename T> struct factrial {
   int sz_f = 1, sz_i = 1;
-  vector<T> m_fact = {1};
-  vector<T> m_infact = {1};
+  std::vector<T> m_fact = {1};
+  std::vector<T> m_infact = {1};
 
   void update_fact(int n) {
     if (sz_f > n)

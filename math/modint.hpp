@@ -1,10 +1,9 @@
 #pragma once
 #include <iostream>
-#include <vector>
-using ll = long long;
-using namespace std;
+#include <utility>
 
-template <ll Mod> struct modint {
+template <long long Mod> struct modint {
+  using ll = long long;
   static const ll mod = Mod;
   ll val;
   modint(ll sig = 0) {
@@ -34,9 +33,9 @@ template <ll Mod> struct modint {
     while (b) {
       ll t = a / b;
       a -= t * b;
-      swap(a, b);
+      std::swap(a, b);
       u -= t * v;
-      swap(u, v);
+      std::swap(u, v);
     }
     val = val * u % Mod;
     if (val < 0)
@@ -61,10 +60,10 @@ template <ll Mod> struct modint {
   constexpr bool operator!=(const modint &that) const noexcept {
     return this->val != that.val;
   }
-  friend constexpr ostream &operator<<(ostream &os, const modint &x) noexcept {
+  friend constexpr std::ostream &operator<<(std::ostream &os, const modint &x) noexcept {
     return os << x.val;
   }
-  friend constexpr istream &operator>>(istream &is, modint &x) noexcept {
+  friend constexpr std::istream &operator>>(std::istream &is, modint &x) noexcept {
     return is >> x.val;
   }
 
@@ -74,7 +73,6 @@ template <ll Mod> struct modint {
       res *= (n & 1 ? r : 1);
     return res;
   }
-  static int sz;
 };
 
 using modint1000000007 = modint<1000000007>;
